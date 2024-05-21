@@ -1,29 +1,32 @@
 interface Entity {
-  use_id: string;
-  use_name: string;
-  use_last_name: string;
-  use_email: string;
-  use_password: string;
-  use_token: string;
-  use_record_status: string;
+  id: number;
+  name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  token: string;
+  record_status: string;
+  created_date: Date;
 }
 
 export class User {
-  public use_id: string;
-  public use_name: string;
-  public use_last_name: string;
-  public use_email: string;
-  public use_password: string;
-  public use_token: string;
-  public use_record_status: string;
+  public id: number;
+  public name: string;
+  public last_name: string;
+  public email: string;
+  public password: string;
+  public token: string;
+  public record_status: string;
+  public created_date: Date;
 
   constructor(entity: Entity) {
-    this.use_id = entity.use_id;
-    this.use_name = entity.use_name;
-    this.use_last_name = entity.use_last_name;
-    this.use_email = entity.use_email;
-    this.use_password = entity.use_password;
-    this.use_token = entity.use_token;
-    this.use_record_status = entity.use_record_status;
+    this.id = entity.id;
+    this.name = entity.name;
+    this.last_name = entity.last_name;
+    this.email = entity.email;
+    this.password = entity.password;
+    this.token = entity.token;
+    this.record_status = entity.record_status;
+    this.created_date = entity.created_date;
   }
 }
