@@ -1,25 +1,22 @@
 interface Entity {
   id: number;
-  name: string;
-  code: string;
-  id_country: number;
+  id_product: number;
+  id_category: number;
   created_date: Date;
   record_status: string;
 }
 
-export class Province {
+export class ProductCategory {
   public id: number;
-  public name: string;
-  public code: string;
-  public id_country: number;
+  public id_product: number;
+  public id_category: number;
   public created_date: Date;
   public record_status: string;
 
   constructor(entity: Entity) {
     this.id = entity.id;
-    this.name = entity.name;
-    this.code = entity.code;
-    this.id_country = entity.id_country;
+    this.id_product = entity.id_product;
+    this.id_category = entity.id_category;
     this.created_date = entity.created_date;
     this.record_status = entity.record_status;
   }

@@ -5,8 +5,8 @@ interface Entity {
   email: string;
   password: string;
   token: string;
-  record_status: string;
   created_date: Date;
+  record_status: string;
 }
 
 export class User {

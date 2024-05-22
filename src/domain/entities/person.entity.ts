@@ -10,6 +10,7 @@ interface Entity {
   occupation: string;
   genre: string;
   created_date: Date;
+  record_status: string;
 }
 
 export class Person {
@@ -24,6 +25,7 @@ export class Person {
   public occupation: string;
   public genre: string;
   public created_date: Date;
+  public record_status: string;
 
   constructor(entity: Entity) {
     this.id = entity.id;
@@ -37,5 +39,6 @@ export class Person {
     this.occupation = entity.occupation;
     this.genre = entity.genre;
     this.created_date = entity.created_date;
+    this.record_status = entity.record_status;
   }
 }
