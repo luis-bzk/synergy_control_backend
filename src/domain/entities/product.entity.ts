@@ -6,7 +6,7 @@ interface Entity {
   iva_price: number;
   discount: number;
   stock: number;
-  sku: string;
+  sku_identifier: string;
   id_agency: number;
   created_date: Date;
   record_status: string;
@@ -20,7 +20,7 @@ export class Product {
   public iva_price: number;
   public discount: number;
   public stock: number;
-  public sku: string;
+  public sku_identifier: string;
   public id_agency: number;
   public created_date: Date;
   public record_status: string;
@@ -33,7 +33,7 @@ export class Product {
     this.iva_price = entity.iva_price;
     this.discount = entity.discount;
     this.stock = entity.stock;
-    this.sku = entity.sku;
+    this.sku_identifier = entity.sku_identifier;
     this.id_agency = entity.id_agency;
     this.created_date = entity.created_date;
     this.record_status = entity.record_status;

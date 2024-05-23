@@ -13,3 +13,8 @@ export * from './category.entity';
 export * from './product.entity';
 export * from './product_details.entity';
 export * from './product_category.entity';
+export * from './product_inventory.entity';
+export * from './sale_order.entity';
+export * from './sale_order_detail.entity';
+export * from './warehouse.entity';
+export * from './company.entity';
