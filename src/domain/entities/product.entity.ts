@@ -1,5 +1,6 @@
 interface Entity {
   id: number;
+  id_agency: number;
   name: string;
   description: string;
   base_price: number;
@@ -7,13 +8,13 @@ interface Entity {
   discount: number;
   stock: number;
   sku_identifier: string;
-  id_agency: number;
   created_date: Date;
   record_status: string;
 }
 
 export class Product {
   public id: number;
+  public id_agency: number;
   public name: string;
   public description: string;
   public base_price: number;
@@ -21,12 +22,12 @@ export class Product {
   public discount: number;
   public stock: number;
   public sku_identifier: string;
-  public id_agency: number;
   public created_date: Date;
   public record_status: string;
 
   constructor(entity: Entity) {
     this.id = entity.id;
+    this.id_agency = entity.id_agency;
     this.name = entity.name;
     this.description = entity.description;
     this.base_price = entity.base_price;
@@ -34,7 +35,6 @@ export class Product {
     this.discount = entity.discount;
     this.stock = entity.stock;
     this.sku_identifier = entity.sku_identifier;
-    this.id_agency = entity.id_agency;
     this.created_date = entity.created_date;
     this.record_status = entity.record_status;
   }
