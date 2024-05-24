@@ -4,6 +4,7 @@ export * from './user_role.entity';
 export * from './genre.entity';
 export * from './identification_type.entity';
 export * from './person.entity';
+export * from './phone_type.entity';
 export * from './phone.entity';
 export * from './country.entity';
 export * from './province.entity';
