@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 
 import { AuthDataSource } from '../../domain/data_sources';
 import {
+  ChangePasswordDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -116,7 +117,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         [email, '0'],
       );
       if ((user_found.rows.length = 0)) {
-        throw CustomError.badRequest(
+        throw CustomError.notFound(
           'No se ha encontrado un usuario asociado a este email',
         );
       }
@@ -131,6 +132,43 @@ export class AuthDataSourceImpl implements AuthDataSource {
       );
 
       return UserMapper.userEntityFromObject(update_user.rows[0]);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer();
+    }
+  }
+
+  async changePassword(changePasswordDto: ChangePasswordDto): Promise<User> {
+    const { password, token } = changePasswordDto;
+
+    try {
+      const user_found = await this.pool.query<UserDB>(
+        `SELECT *
+      FROM CORE.CORE_USER USE
+      WHERE USE.USE_TOKEN = $1
+        AND USE.USE_RECORD_STATUS = $2;`,
+        [token, '0'],
+      );
+
+      if ((user_found.rows.length = 0)) {
+        throw CustomError.notFound(
+          'No se ha encontrado un usuario asociado a este token',
+        );
+      }
+
+      const updated_user = await this.pool.query<UserDB>(
+        `UPDATE CORE.CORE_USER
+      SET USE_TOKEN = $1
+      WHERE USE_PASSWORD = $2
+        AND USE_RECORD_STATUS = $3
+      RETURNING *;`,
+        [null, this.hashPassword(password), '0'],
+      );
+
+      return UserMapper.userEntityFromObject(updated_user.rows[0]);
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;

@@ -1,6 +1,7 @@
 import { AuthRepository } from '../../domain/repositories';
 import { AuthDataSource } from '../../domain/data_sources';
 import {
+  ChangePasswordDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -20,5 +21,9 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   recoverPassword(recoverPasswordDto: RecoverPasswordDto): Promise<User> {
     return this.authDataSource.recoverPassword(recoverPasswordDto);
+  }
+
+  changePassword(changePasswordDto: ChangePasswordDto): Promise<User> {
+    return this.authDataSource.changePassword(changePasswordDto);
   }
 }

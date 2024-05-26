@@ -1,5 +1,10 @@
 import { User } from '../entities';
-import { LoginUserDto, RecoverPasswordDto, SignupUserDto } from '../dtos';
+import {
+  ChangePasswordDto,
+  LoginUserDto,
+  RecoverPasswordDto,
+  SignupUserDto,
+} from '../dtos';
 
 export abstract class AuthDataSource {
   abstract login(loginUserDto: LoginUserDto): Promise<User>;
@@ -9,4 +14,6 @@ export abstract class AuthDataSource {
   abstract recoverPassword(
     recoverPasswordDto: RecoverPasswordDto,
   ): Promise<User>;
+
+  abstract changePassword(changePasswordDto: ChangePasswordDto): Promise<User>;
 }

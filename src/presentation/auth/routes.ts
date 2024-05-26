@@ -15,7 +15,7 @@ export class AuthRoutes {
     router.post('/login', controller.loginUser);
     router.post('/signup', controller.signupUser);
     router.patch('/request/recover-password', controller.recoverPassword);
-    router.patch('/request/change-password');
+    router.patch('/request/change-password', controller.changePassword);
     router.get('/check/token/:token');
     router.patch('/confirm/user');
 

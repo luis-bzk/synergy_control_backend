@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { AuthRepository } from '../../domain/repositories';
 import { CustomError } from '../../domain/errors';
 import {
+  ChangePasswordDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -12,6 +13,7 @@ import {
   RecoverPassword,
   SignUpUser,
 } from '../../domain/use_cases/auth';
+import { ChangePassword } from '../../domain/use_cases/auth/change_password.use_case';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -52,6 +54,17 @@ export class AuthController {
 
     new RecoverPassword(this.authRepository)
       .execute(recoverPasswordDto!)
+      .then((data) => res.status(200).json(data))
+      .catch((err) => this.handleError(err, res));
+  };
+
+  changePassword = (req: Request, res: Response) => {
+    const [error, changePasswordDto] = ChangePasswordDto.create(req.body);
+
+    if (error) return res.status(400).json({ error });
+
+    new ChangePassword(this.authRepository)
+      .execute(changePasswordDto!)
       .then((data) => res.status(200).json(data))
       .catch((err) => this.handleError(err, res));
   };
