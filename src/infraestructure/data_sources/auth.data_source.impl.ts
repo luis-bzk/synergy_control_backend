@@ -3,6 +3,8 @@ import { Pool } from 'pg';
 import { AuthDataSource } from '../../domain/data_sources';
 import {
   ChangePasswordDto,
+  CheckTokenDto,
+  ConfirmAccountDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -161,11 +163,77 @@ export class AuthDataSourceImpl implements AuthDataSource {
 
       const updated_user = await this.pool.query<UserDB>(
         `UPDATE CORE.CORE_USER
-      SET USE_TOKEN = $1
-      WHERE USE_PASSWORD = $2
+      SET USE_TOKEN    = $1,
+          USE_PASSWORD = $2
+      WHERE USE_TOKEN = $3
+        AND USE_RECORD_STATUS = $4
+      RETURNING *;`,
+        [null, this.hashPassword(password), token, '0'],
+      );
+
+      return UserMapper.userEntityFromObject(updated_user.rows[0]);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer();
+    }
+  }
+
+  async checkToken(checkTokenDto: CheckTokenDto): Promise<User> {
+    const { token } = checkTokenDto;
+
+    try {
+      const user_found = await this.pool.query<UserDB>(
+        `SELECT *
+      FROM CORE.CORE_USER USE
+      WHERE USE.USE_TOKEN = $1
+        AND USE.USE_RECORD_STATUS = $2;`,
+        [token, '0'],
+      );
+
+      if ((user_found.rows.length = 0)) {
+        throw CustomError.notFound(
+          'No se ha encontrado un usuario asociado a este token',
+        );
+      }
+
+      return UserMapper.userEntityFromObject(user_found.rows[0]);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer();
+    }
+  }
+
+  async confirmAccount(confirmAccountDto: ConfirmAccountDto): Promise<User> {
+    const { token } = confirmAccountDto;
+
+    try {
+      const user_found = await this.pool.query<UserDB>(
+        `SELECT *
+      FROM CORE.CORE_USER USE
+      WHERE USE.USE_TOKEN = $1
+        AND USE.USE_RECORD_STATUS = $2;`,
+        [token, '0'],
+      );
+
+      if ((user_found.rows.length = 0)) {
+        throw CustomError.notFound(
+          'No se ha encontrado un usuario asociado a este token',
+        );
+      }
+
+      const updated_user = await this.pool.query<UserDB>(
+        `UPDATE CORE.CORE_USER
+      SET USE_TOKEN    = $1
+      WHERE USE_TOKEN = $2
         AND USE_RECORD_STATUS = $3
       RETURNING *;`,
-        [null, this.hashPassword(password), '0'],
+        [null, token, '0'],
       );
 
       return UserMapper.userEntityFromObject(updated_user.rows[0]);

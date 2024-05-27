@@ -1,6 +1,8 @@
 import { User } from '../entities';
 import {
   ChangePasswordDto,
+  CheckTokenDto,
+  ConfirmAccountDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -16,4 +18,8 @@ export abstract class AuthDataSource {
   ): Promise<User>;
 
   abstract changePassword(changePasswordDto: ChangePasswordDto): Promise<User>;
+
+  abstract checkToken(checkTokenDto: CheckTokenDto): Promise<User>;
+
+  abstract confirmAccount(confirmAccountDto: ConfirmAccountDto): Promise<User>;
 }

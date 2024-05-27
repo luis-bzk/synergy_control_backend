@@ -4,6 +4,8 @@ import { AuthRepository } from '../../domain/repositories';
 import { CustomError } from '../../domain/errors';
 import {
   ChangePasswordDto,
+  CheckTokenDto,
+  ConfirmAccountDto,
   LoginUserDto,
   RecoverPasswordDto,
   SignupUserDto,
@@ -12,8 +14,10 @@ import {
   LoginUser,
   RecoverPassword,
   SignUpUser,
+  ChangePassword,
+  CheckToken,
+  ConfirmAccount,
 } from '../../domain/use_cases/auth';
-import { ChangePassword } from '../../domain/use_cases/auth/change_password.use_case';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -67,5 +71,25 @@ export class AuthController {
       .execute(changePasswordDto!)
       .then((data) => res.status(200).json(data))
       .catch((err) => this.handleError(err, res));
+  };
+
+  checkToken = (req: Request, res: Response) => {
+    const [error, checkTokenDto] = CheckTokenDto.create(req.params.token);
+    if (error) return res.status(400).json({ error });
+
+    new CheckToken(this.authRepository)
+      .execute(checkTokenDto!)
+      .then((data) => res.status(200).json(data))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  confirmAccount = (req: Request, res: Response) => {
+    const [error, confirmAccountDto] = ConfirmAccountDto.create(req.body);
+    if (error) return res.status(400).json({ error });
+
+    new ConfirmAccount(this.authRepository)
+      .execute(confirmAccountDto!)
+      .then((data) => res.status(200).json(data))
+      .catch((error) => this.handleError(error, res));
   };
 }
