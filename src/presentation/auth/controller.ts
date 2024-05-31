@@ -18,6 +18,7 @@ import {
   CheckToken,
   ConfirmAccount,
 } from '../../domain/use_cases/auth';
+import { EmailGateway } from '../../infraestructure/gateways';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -48,7 +49,16 @@ export class AuthController {
 
     new SignUpUser(this.authRepository)
       .execute(signupUserDto!)
-      .then((data) => res.status(201).json(data))
+      .then(async (data) => {
+        await EmailGateway.sendEmailVerifyAccount({
+          email: data.email,
+          name: data.last_name,
+          lastName: data.last_name,
+          token: data.token,
+        });
+
+        return res.status(201).json(data);
+      })
       .catch((err) => this.handleError(err, res));
   };
 
@@ -58,7 +68,15 @@ export class AuthController {
 
     new RecoverPassword(this.authRepository)
       .execute(recoverPasswordDto!)
-      .then((data) => res.status(200).json(data))
+      .then(async (data) => {
+        await EmailGateway.sendEmailRecoverPassword({
+          email: data.email,
+          name: data.last_name,
+          lastName: data.last_name,
+          token: data.token,
+        });
+        res.status(200).json(data);
+      })
       .catch((err) => this.handleError(err, res));
   };
 

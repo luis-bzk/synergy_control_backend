@@ -12,4 +12,9 @@ export const envs = {
   DB_DATABASE: get('DB_DATABASE').required().asString(),
   DB_PASSWORD: get('DB_PASSWORD').required().asString(),
   DB_PORT: get('DB_PORT').required().asPortNumber(),
+
+  SMTP_HOST: get('SMTP_HOST').required().asString(),
+  SMTP_PORT: get('SMTP_PORT').required().asString(),
+  SMTP_USER: get('SMTP_USER').required().asString(),
+  SMTP_PASS: get('SMTP_PASS').required().asString(),
 };
