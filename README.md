@@ -33,7 +33,7 @@ importa el tamaño o el sector, estamos aquí para ayudarte a alcanzar tus metas
 Para poder realizar la reconstrucción e instalación de los módulos se requiere ejecutar los siguientes comandos
 
 ```bash copy
-npm run install
+npm install
 npm run dev
 ```
 
