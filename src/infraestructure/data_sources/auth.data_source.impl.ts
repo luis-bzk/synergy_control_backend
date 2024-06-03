@@ -29,15 +29,16 @@ export class AuthDataSourceImpl implements AuthDataSource {
 
   async login(loginUserDto: LoginUserDto): Promise<User> {
     const { email, password } = loginUserDto;
-
     try {
       const response = await this.pool.query<UserDB>(
         'SELECT * FROM CORE.CORE_USER USE WHERE USE.USE_EMAIL = $1 AND USE.USE_RECORD_STATUS = $2',
         [email, '0'],
       );
-      if ((response.rows.length = 0)) {
+
+      if (response.rows.length === 0) {
         throw CustomError.badRequest('El usuario o contraseña es incorrecto');
       }
+
       const user_found = response.rows[0];
 
       const isMatching = this.comparepassword(
@@ -118,7 +119,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
       AND USE.USE_RECORD_STATUS = $2;`,
         [email, '0'],
       );
-      if ((user_found.rows.length = 0)) {
+      if (user_found.rows.length === 0) {
         throw CustomError.notFound(
           'No se ha encontrado un usuario asociado a este email',
         );
@@ -155,7 +156,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         [token, '0'],
       );
 
-      if ((user_found.rows.length = 0)) {
+      if (user_found.rows.length === 0) {
         throw CustomError.notFound(
           'No se ha encontrado un usuario asociado a este token',
         );
@@ -193,7 +194,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         [token, '0'],
       );
 
-      if ((user_found.rows.length = 0)) {
+      if (user_found.rows.length === 0) {
         throw CustomError.notFound(
           'No se ha encontrado un usuario asociado a este token',
         );
@@ -221,7 +222,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         [token, '0'],
       );
 
-      if ((user_found.rows.length = 0)) {
+      if (user_found.rows.length === 0) {
         throw CustomError.notFound(
           'No se ha encontrado un usuario asociado a este token',
         );
