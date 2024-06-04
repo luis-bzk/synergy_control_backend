@@ -5,49 +5,49 @@ import { User } from '../../domain/entities';
 export class UserMapper {
   static userEntityFromObject(obj: UserDB): User {
     const {
-      USE_ID,
-      USE_EMAIL,
-      USE_CREATED_DATE,
-      USE_NAME,
-      USE_LAST_NAME,
-      USE_TOKEN,
-      USE_RECORD_STATUS,
+      use_id,
+      use_email,
+      use_created_date,
+      use_name,
+      use_last_name,
+      use_token,
+      use_record_status,
     } = obj;
 
-    if (!USE_ID)
+    if (!use_id)
       throw CustomError.conflict(
         'No se ha recibido el ID del usuario de la Base de Datos',
       );
-    if (!USE_EMAIL)
+    if (!use_email)
       throw CustomError.conflict(
         'No se ha recibido el email del usuario de la Base de Datos',
       );
-    if (!USE_CREATED_DATE)
+    if (!use_created_date)
       throw CustomError.conflict(
         'No se ha recibido la fecha de creacion del usuario de la Base de Datos',
       );
-    if (!USE_NAME)
+    if (!use_name)
       throw CustomError.conflict(
         'No se ha recibido el nombre del usuario de la Base de Datos',
       );
-    if (!USE_LAST_NAME)
+    if (!use_last_name)
       throw CustomError.conflict(
         'No se ha recibido el apellido del usuario de la Base de Datos',
       );
-    if (!USE_RECORD_STATUS)
+    if (!use_record_status)
       throw CustomError.conflict(
         'No se ha recibido el estado de registro del usuario de la Base de Datos',
       );
 
     return new User({
-      id: USE_ID,
-      email: USE_EMAIL,
-      name: USE_NAME,
-      last_name: USE_LAST_NAME,
+      id: use_id,
+      email: use_email,
+      name: use_name,
+      last_name: use_last_name,
       password: '',
-      token: USE_TOKEN,
-      created_date: USE_CREATED_DATE,
-      record_status: USE_RECORD_STATUS,
+      token: use_token,
+      created_date: use_created_date,
+      record_status: use_record_status,
     });
   }
 

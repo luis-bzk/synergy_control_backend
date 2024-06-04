@@ -42,7 +42,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
       const user_found = response.rows[0];
 
       const isMatching = this.comparepassword(
-        user_found.USE_PASSWORD,
+        user_found.use_password,
         password,
       );
 
@@ -131,7 +131,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
       WHERE USE_ID = $2
       AND USE_RECORD_STATUS = $3
       RETURNING *;`,
-        [tokenGenerator(), user_found.rows[0].USE_ID, '0'],
+        [tokenGenerator(), user_found.rows[0].use_id, '0'],
       );
 
       return UserMapper.userEntityFromObject(update_user.rows[0]);

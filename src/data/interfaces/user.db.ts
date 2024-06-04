@@ -1,10 +1,10 @@
 export interface UserDB {
-  USE_ID: number;
-  USE_NAME: string;
-  USE_LAST_NAME: string;
-  USE_EMAIL: string;
-  USE_PASSWORD: string;
-  USE_TOKEN: string;
-  USE_CREATED_DATE: Date;
-  USE_RECORD_STATUS: string;
+  use_id: number;
+  use_name: string;
+  use_last_name: string;
+  use_email: string;
+  use_password: string;
+  use_token: string;
+  use_created_date: Date;
+  use_record_status: string;
 }
