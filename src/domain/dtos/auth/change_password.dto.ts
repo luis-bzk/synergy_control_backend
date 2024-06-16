@@ -1,10 +1,13 @@
 import { Validators } from '../../../config';
 
 export class ChangePasswordDto {
-  constructor(
-    public password: string,
-    public token: string,
-  ) {}
+  public password: string;
+  public token: string;
+
+  constructor(password: string, token: string) {
+    this.password = password;
+    this.token = token;
+  }
 
   static create(object: { [key: string]: any }): [string?, ChangePasswordDto?] {
     const { password, token } = object;

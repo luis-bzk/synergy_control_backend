@@ -1,5 +1,5 @@
-import { CheckTokenDto } from '../../dtos';
 import { User } from '../../entities';
+import { CheckTokenDto } from '../../dtos';
 import { AuthRepository } from '../../repositories';
 
 interface CheckTokenUseCase {
@@ -7,7 +7,11 @@ interface CheckTokenUseCase {
 }
 
 export class CheckToken implements CheckTokenUseCase {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private readonly authRepository: AuthRepository;
+
+  constructor(authRepository: AuthRepository) {
+    this.authRepository = authRepository;
+  }
 
   async execute(checkTokenDto: CheckTokenDto): Promise<User> {
     return await this.authRepository.checkToken(checkTokenDto);

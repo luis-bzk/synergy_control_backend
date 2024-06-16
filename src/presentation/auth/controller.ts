@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 
-import { AuthRepository } from '../../domain/repositories';
-import { CustomError } from '../../domain/errors';
 import {
   ChangePasswordDto,
   CheckTokenDto,
@@ -18,10 +16,16 @@ import {
   CheckToken,
   ConfirmAccount,
 } from '../../domain/use_cases/auth';
+import { CustomError } from '../../domain/errors';
+import { AuthRepository } from '../../domain/repositories';
 import { EmailGateway } from '../../infraestructure/gateways';
 
 export class AuthController {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private readonly authRepository: AuthRepository;
+
+  constructor(authRepository: AuthRepository) {
+    this.authRepository = authRepository;
+  }
 
   private handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {

@@ -1,5 +1,3 @@
-import { AuthRepository } from '../../domain/repositories';
-import { AuthDataSource } from '../../domain/data_sources';
 import {
   ChangePasswordDto,
   CheckTokenDto,
@@ -9,9 +7,15 @@ import {
   SignupUserDto,
 } from '../../domain/dtos';
 import { User } from '../../domain/entities';
+import { AuthRepository } from '../../domain/repositories';
+import { AuthDataSource } from '../../domain/data_sources';
 
 export class AuthRepositoryImpl implements AuthRepository {
-  constructor(private readonly authDataSource: AuthDataSource) {}
+  private readonly authDataSource: AuthDataSource;
+
+  constructor(authDataSource: AuthDataSource) {
+    this.authDataSource = authDataSource;
+  }
 
   login(loginUserDto: LoginUserDto): Promise<User> {
     return this.authDataSource.login(loginUserDto);

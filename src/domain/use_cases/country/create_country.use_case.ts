@@ -7,7 +7,11 @@ interface CreateCountryUseCase {
 }
 
 export class CreateCountry implements CreateCountryUseCase {
-  constructor(private readonly countryRepository: CountryRepository) {}
+  private readonly countryRepository: CountryRepository;
+
+  constructor(countryRepository: CountryRepository) {
+    this.countryRepository = countryRepository;
+  }
 
   async execute(createCountryDto: CreateCountryDto): Promise<Country> {
     return await this.countryRepository.create(createCountryDto);

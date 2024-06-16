@@ -1,5 +1,5 @@
-import { ChangePasswordDto } from '../../dtos';
 import { User } from '../../entities';
+import { ChangePasswordDto } from '../../dtos';
 import { AuthRepository } from '../../repositories';
 
 interface ChangePasswordUseCase {
@@ -7,7 +7,11 @@ interface ChangePasswordUseCase {
 }
 
 export class ChangePassword implements ChangePasswordUseCase {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private readonly authRepository: AuthRepository;
+
+  constructor(authRepository: AuthRepository) {
+    this.authRepository = authRepository;
+  }
 
   async execute(changePasswordDto: ChangePasswordDto): Promise<User> {
     return this.authRepository.changePassword(changePasswordDto);

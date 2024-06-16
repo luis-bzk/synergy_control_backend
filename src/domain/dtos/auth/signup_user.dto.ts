@@ -1,12 +1,17 @@
 import { Validators } from '../../../config';
 
 export class SignupUserDto {
-  constructor(
-    public name: string,
-    public lastName: string,
-    public email: string,
-    public password: string,
-  ) {}
+  public name: string;
+  public lastName: string;
+  public email: string;
+  public password: string;
+
+  constructor(name: string, lastName: string, email: string, password: string) {
+    this.name = name;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
 
   static create(object: { [key: string]: any }): [string?, SignupUserDto?] {
     const { name, lastName, email, password } = object;

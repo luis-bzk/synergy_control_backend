@@ -1,7 +1,7 @@
 import { LoginUserDto } from '../../dtos';
-import { AuthRepository } from '../../repositories';
-import { JwtAdapter } from '../../../config';
 import { CustomError } from '../../errors';
+import { JwtAdapter } from '../../../config';
+import { AuthRepository } from '../../repositories';
 
 interface UserToken {
   token: string;
@@ -19,10 +19,13 @@ interface LoginUserUsease {
 }
 
 export class LoginUser implements LoginUserUsease {
-  constructor(
-    private readonly authRepository: AuthRepository,
-    private readonly signToken: SignToken = JwtAdapter.generateToken,
-  ) {}
+  private readonly authRepository: AuthRepository;
+  private readonly signToken: SignToken;
+
+  constructor(authRepository: AuthRepository) {
+    this.authRepository = authRepository;
+    this.signToken = JwtAdapter.generateToken;
+  }
 
   async execute(loginUserDto: LoginUserDto): Promise<UserToken> {
     const user = await this.authRepository.login(loginUserDto);

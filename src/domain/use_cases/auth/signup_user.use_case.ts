@@ -1,5 +1,5 @@
-import { SignupUserDto } from '../../dtos';
 import { User } from '../../entities';
+import { SignupUserDto } from '../../dtos';
 import { AuthRepository } from '../../repositories';
 
 interface SignupUserUseCase {
@@ -7,7 +7,11 @@ interface SignupUserUseCase {
 }
 
 export class SignUpUser implements SignupUserUseCase {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private readonly authRepository: AuthRepository;
+
+  constructor(authRepository: AuthRepository) {
+    this.authRepository = authRepository;
+  }
 
   async execute(signupUserDto: SignupUserDto): Promise<User> {
     return await this.authRepository.signup(signupUserDto);

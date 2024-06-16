@@ -1,9 +1,13 @@
 export class CreateCountryDto {
-  constructor(
-    public name: string,
-    public code: string,
-    public prefix: string,
-  ) {}
+  public name: string;
+  public code: string;
+  public prefix: string;
+
+  constructor(name: string, code: string, prefix: string) {
+    this.name = name;
+    this.code = code;
+    this.prefix = prefix;
+  }
 
   static create(object: { [key: string]: any }): [string?, CreateCountryDto?] {
     const { name, code, prefix } = object;

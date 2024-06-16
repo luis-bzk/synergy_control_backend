@@ -1,17 +1,18 @@
 import { Pool } from 'pg';
 
+import { PostgresDatabase } from '../../data';
 import { Country } from '../../domain/entities';
 import { CountryDB } from '../../data/interfaces';
 import { CustomError } from '../../domain/errors';
+import { CountryMapper } from '../mappers/country.mapper';
 import { CreateCountryDto } from '../../domain/dtos/country';
 import { CountryDataSource } from '../../domain/data_sources';
-import { CountryMapper } from '../mappers/country.mapper';
 
 export class CountryDataSourceImpl implements CountryDataSource {
   private pool: Pool;
 
-  constructor(pool: Pool) {
-    this.pool = pool;
+  constructor() {
+    this.pool = PostgresDatabase.getPool();
   }
 
   async create(createCountryDto: CreateCountryDto): Promise<Country> {

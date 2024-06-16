@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { AuthRoutes } from './auth/routes';
+import { CountryRoutes } from './country/routes';
 
 export class AppRoutes {
   static get routes(): Router {
@@ -7,6 +8,7 @@ export class AppRoutes {
 
     // global routes
     router.use('/api/v1/auth', AuthRoutes.getRoutes);
+    router.use('/api/v1/country', CountryRoutes.getRoutes);
 
     // security not found route
     router.use((_req: Request, res: Response, _next: NextFunction) => {

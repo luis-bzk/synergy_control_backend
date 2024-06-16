@@ -21,11 +21,15 @@ type HashFunction = (password: string) => string;
 type CompareFunction = (password: string, hashed: string) => boolean;
 
 export class AuthDataSourceImpl implements AuthDataSource {
-  constructor(
-    private pool: Pool = PostgresDatabase.getPool(),
-    private readonly hashPassword: HashFunction = BcryptAdapter.hash,
-    private readonly comparePassword: CompareFunction = BcryptAdapter.compare,
-  ) {}
+  private pool: Pool;
+  private readonly hashPassword: HashFunction;
+  private readonly comparePassword: CompareFunction;
+
+  constructor() {
+    this.pool = PostgresDatabase.getPool();
+    this.hashPassword = BcryptAdapter.hash;
+    this.comparePassword = BcryptAdapter.compare;
+  }
 
   async login(loginUserDto: LoginUserDto): Promise<User> {
     const { email, password } = loginUserDto;

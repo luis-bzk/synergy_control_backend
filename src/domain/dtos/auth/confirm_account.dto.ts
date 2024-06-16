@@ -1,5 +1,9 @@
 export class ConfirmAccountDto {
-  constructor(public token: string) {}
+  public token: string;
+
+  constructor(token: string) {
+    this.token = token;
+  }
 
   static create(object: { [key: string]: any }): [string?, ConfirmAccountDto?] {
     const { token } = object;

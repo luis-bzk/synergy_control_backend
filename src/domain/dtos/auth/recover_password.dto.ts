@@ -1,7 +1,11 @@
 import { Validators } from '../../../config';
 
 export class RecoverPasswordDto {
-  constructor(public email: string) {}
+  public email: string;
+
+  constructor(email: string) {
+    this.email = email;
+  }
 
   static create(object: {
     [key: string]: any;
