@@ -51,7 +51,7 @@ export class UserMapper {
     });
   }
 
-  static userEntityArrayFromObjects(objs: UserDB[]) {
+  static userEntityArrayFromObjects(objs: UserDB[]): User[] {
     return objs.map((user) => this.userEntityFromObject(user));
   }
 }
