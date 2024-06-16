@@ -59,7 +59,9 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer(
+        'Error en el Data Source al iniciar sesión',
+      );
     }
   }
 
@@ -109,7 +111,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer('Error en el Data Source al registrar');
     }
   }
 
@@ -145,7 +147,9 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer(
+        'Error en el Data Source al recuperar la contraseña',
+      );
     }
   }
 
@@ -183,7 +187,9 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer(
+        'Error en el Data Source al cambiar la contraseña',
+      );
     }
   }
 
@@ -211,7 +217,9 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer(
+        'Error en el Data Source al verificar el token',
+      );
     }
   }
 
@@ -248,7 +256,9 @@ export class AuthDataSourceImpl implements AuthDataSource {
         throw error;
       }
 
-      throw CustomError.internalServer();
+      throw CustomError.internalServer(
+        'Error en el Data Source al confirmar la cuenta',
+      );
     }
   }
 }
