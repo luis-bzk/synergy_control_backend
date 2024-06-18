@@ -1,7 +1,11 @@
 import { Country } from '../../domain/entities';
 import { CountryRepository } from '../../domain/repositories';
 import { CountryDataSource } from '../../domain/data_sources';
-import { CreateCountryDto, UpdateCountryDto } from '../../domain/dtos/country';
+import {
+  CreateCountryDto,
+  GetCountryDto,
+  UpdateCountryDto,
+} from '../../domain/dtos/country';
 
 export class CountryRepositoryImpl implements CountryRepository {
   private readonly countryDataSource: CountryDataSource;
@@ -16,5 +20,9 @@ export class CountryRepositoryImpl implements CountryRepository {
 
   update(updateCountryDto: UpdateCountryDto): Promise<Country> {
     return this.countryDataSource.update(updateCountryDto);
+  }
+
+  get(getCountryDto: GetCountryDto): Promise<Country> {
+    return this.countryDataSource.get(getCountryDto);
   }
 }

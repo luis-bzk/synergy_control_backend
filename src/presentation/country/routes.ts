@@ -14,6 +14,7 @@ export class CountryRoutes {
     // routes
     router.post('/create', controller.createCountry);
     router.put('/update/:id', controller.updateCountry);
+    router.get('/get/:id', controller.getCountry);
 
     return router;
   }

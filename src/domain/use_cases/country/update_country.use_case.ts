@@ -9,8 +9,8 @@ interface UpdateCountryUseCase {
 export class UpdateCountry implements UpdateCountryUseCase {
   private readonly countryRepository: CountryRepository;
 
-  constructor(countryRepositoy: CountryRepository) {
-    this.countryRepository = countryRepositoy;
+  constructor(countryRepository: CountryRepository) {
+    this.countryRepository = countryRepository;
   }
 
   async execute(updateCountryDto: UpdateCountryDto): Promise<Country> {

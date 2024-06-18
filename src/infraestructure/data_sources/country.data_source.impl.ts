@@ -5,7 +5,11 @@ import { Country } from '../../domain/entities';
 import { CountryDB } from '../../data/interfaces';
 import { CustomError } from '../../domain/errors';
 import { CountryMapper } from '../mappers/country.mapper';
-import { CreateCountryDto, UpdateCountryDto } from '../../domain/dtos/country';
+import {
+  CreateCountryDto,
+  GetCountryDto,
+  UpdateCountryDto,
+} from '../../domain/dtos/country';
 import { CountryDataSource } from '../../domain/data_sources';
 
 export class CountryDataSourceImpl implements CountryDataSource {
@@ -19,7 +23,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
     const { name, prefix, code } = createCountryDto;
 
     try {
-      const response = await this.pool.query<CountryDB>(
+      const result = await this.pool.query<CountryDB>(
         `select *
         from core.core_country cou
         where lower(cou.cou_name) = $1
@@ -27,7 +31,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
         [name.toLowerCase(), '0'],
       );
 
-      if (response.rows.length > 0) {
+      if (result.rows.length > 0) {
         throw CustomError.badRequest(
           'Ya existe un pais registrado con ese nombre',
         );
@@ -60,14 +64,14 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
     try {
       // verify existence
-      const response = await this.pool.query(
+      const result = await this.pool.query(
         `select *
         from core.core_country cou
         where cou.cou_id = $1
           and cou.cou_record_status = $2;`,
         [id, '0'],
       );
-      if (response.rows.length === 0) {
+      if (result.rows.length === 0) {
         throw CustomError.notFound('No se ha encontrado el pais a actualizar');
       }
 
@@ -105,6 +109,32 @@ export class CountryDataSourceImpl implements CountryDataSource {
       }
 
       throw CustomError.internalServer('Error en el Data Source al actualizar');
+    }
+  }
+
+  async get(getCountryDto: GetCountryDto): Promise<Country> {
+    const { id } = getCountryDto;
+
+    try {
+      const result = await this.pool.query(
+        `select *
+        from core.core_country cou
+        where cou.cou_id = $1
+          and cou.cou_record_status = $2;`,
+        [id, '0'],
+      );
+
+      if (result.rows.length === 0) {
+        throw CustomError.notFound('No se ha encontrado el país');
+      }
+
+      return CountryMapper.countryEntityFromObject(result.rows[0]);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer('Error en el Data Source al obtener');
     }
   }
 }
