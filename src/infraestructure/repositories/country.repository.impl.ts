@@ -3,6 +3,7 @@ import { CountryRepository } from '../../domain/repositories';
 import { CountryDataSource } from '../../domain/data_sources';
 import {
   CreateCountryDto,
+  GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
 } from '../../domain/dtos/country';
@@ -24,5 +25,9 @@ export class CountryRepositoryImpl implements CountryRepository {
 
   get(getCountryDto: GetCountryDto): Promise<Country> {
     return this.countryDataSource.get(getCountryDto);
+  }
+
+  getAll(getAllCountriesDto: GetAllCountriesDto): Promise<Country[]> {
+    return this.countryDataSource.getAll(getAllCountriesDto);
   }
 }

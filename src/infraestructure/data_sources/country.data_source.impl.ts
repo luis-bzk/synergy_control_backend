@@ -7,6 +7,7 @@ import { CustomError } from '../../domain/errors';
 import { CountryMapper } from '../mappers/country.mapper';
 import {
   CreateCountryDto,
+  GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
 } from '../../domain/dtos/country';
@@ -135,6 +136,36 @@ export class CountryDataSourceImpl implements CountryDataSource {
       }
 
       throw CustomError.internalServer('Error en el Data Source al obtener');
+    }
+  }
+
+  async getAll(getAllCountriesDto: GetAllCountriesDto): Promise<Country[]> {
+    const { limit, offset } = getAllCountriesDto;
+
+    try {
+      const result = await this.pool.query(
+        `select cou.cou_id,
+               cou.cou_name,
+               cou.cou_code,
+               cou.cou_prefix,
+               cou.cou_created_date,
+               cou.cou_record_status
+        from core.core_country cou
+        where cou.cou_record_status = $1
+        order by cou.cou_id desc
+        limit $2 offset $3;`,
+        ['0', limit, offset],
+      );
+
+      return CountryMapper.countryEntityArrayFromObjects(result.rows);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer(
+        'Error en el Data Source al obtener todos',
+      );
     }
   }
 }

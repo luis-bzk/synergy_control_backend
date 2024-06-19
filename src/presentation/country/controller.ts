@@ -3,12 +3,14 @@ import { Request, Response } from 'express';
 import { CustomError } from '../../domain/errors';
 import {
   CreateCountryDto,
+  GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
 } from '../../domain/dtos/country';
 import { CountryRepository } from '../../domain/repositories';
 import {
   CreateCountry,
+  GetAllCountries,
   GetCountry,
   UpdateCountry,
 } from '../../domain/use_cases/country';
@@ -64,6 +66,16 @@ export class CountryController {
 
     new GetCountry(this.countryRepository)
       .execute(getCountryDto!)
+      .then((data) => res.status(200).json(data))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  getAllCountries = (req: Request, res: Response) => {
+    const [error, getAllCountriesDto] = GetAllCountriesDto.create(req.query);
+    if (error) return res.status(400).json({ error });
+
+    new GetAllCountries(this.countryRepository)
+      .execute(getAllCountriesDto!)
       .then((data) => res.status(200).json(data))
       .catch((error) => this.handleError(error, res));
   };

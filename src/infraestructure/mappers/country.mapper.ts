@@ -49,6 +49,10 @@ export class CountryMapper {
   }
 
   static countryEntityArrayFromObjects(objs: CountryDB[]): Country[] {
-    return objs.map((country) => this.countryEntityFromObject(country));
+    if (objs.length > 0) {
+      return objs.map((country) => this.countryEntityFromObject(country));
+    } else {
+      return [];
+    }
   }
 }

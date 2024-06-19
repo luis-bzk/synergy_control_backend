@@ -52,6 +52,10 @@ export class UserMapper {
   }
 
   static userEntityArrayFromObjects(objs: UserDB[]): User[] {
-    return objs.map((user) => this.userEntityFromObject(user));
+    if (objs.length > 0) {
+      return objs.map((user) => this.userEntityFromObject(user));
+    } else {
+      return [];
+    }
   }
 }
