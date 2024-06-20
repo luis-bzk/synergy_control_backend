@@ -3,6 +3,7 @@ import { CountryRepository } from '../../domain/repositories';
 import { CountryDataSource } from '../../domain/data_sources';
 import {
   CreateCountryDto,
+  DeleteCountryDto,
   GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
@@ -29,5 +30,9 @@ export class CountryRepositoryImpl implements CountryRepository {
 
   getAll(getAllCountriesDto: GetAllCountriesDto): Promise<Country[]> {
     return this.countryDataSource.getAll(getAllCountriesDto);
+  }
+
+  delete(deleteCountryDto: DeleteCountryDto): Promise<Country> {
+    return this.countryDataSource.delete(deleteCountryDto);
   }
 }

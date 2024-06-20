@@ -16,6 +16,7 @@ export class CountryRoutes {
     router.put('/update/:id', controller.updateCountry);
     router.get('/get/:id', controller.getCountry);
     router.get('/get-all', controller.getCountry);
+    router.delete('/delete/:id', controller.deleteCountry);
 
     return router;
   }

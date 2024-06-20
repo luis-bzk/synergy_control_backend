@@ -1,6 +1,7 @@
 import { Country } from '../entities';
 import {
   CreateCountryDto,
+  DeleteCountryDto,
   GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
@@ -14,4 +15,6 @@ export abstract class CountryRepository {
   abstract get(getCountryDto: GetCountryDto): Promise<Country>;
 
   abstract getAll(getAllCountriesDto: GetAllCountriesDto): Promise<Country[]>;
+
+  abstract delete(deleteCountryDto: DeleteCountryDto): Promise<Country>;
 }

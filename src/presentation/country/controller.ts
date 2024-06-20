@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { CustomError } from '../../domain/errors';
 import {
   CreateCountryDto,
+  DeleteCountryDto,
   GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
@@ -10,6 +11,7 @@ import {
 import { CountryRepository } from '../../domain/repositories';
 import {
   CreateCountry,
+  DeleteCountry,
   GetAllCountries,
   GetCountry,
   UpdateCountry,
@@ -76,6 +78,16 @@ export class CountryController {
 
     new GetAllCountries(this.countryRepository)
       .execute(getAllCountriesDto!)
+      .then((data) => res.status(200).json(data))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  deleteCountry = (req: Request, res: Response) => {
+    const [error, deleteCountryDto] = DeleteCountryDto.create(req.params.id);
+    if (error) return res.status(400).json({ error });
+
+    new DeleteCountry(this.countryRepository)
+      .execute(deleteCountryDto!)
       .then((data) => res.status(200).json(data))
       .catch((error) => this.handleError(error, res));
   };

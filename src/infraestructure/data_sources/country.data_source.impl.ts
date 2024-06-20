@@ -7,6 +7,7 @@ import { CustomError } from '../../domain/errors';
 import { CountryMapper } from '../mappers/country.mapper';
 import {
   CreateCountryDto,
+  DeleteCountryDto,
   GetAllCountriesDto,
   GetCountryDto,
   UpdateCountryDto,
@@ -166,6 +167,41 @@ export class CountryDataSourceImpl implements CountryDataSource {
       throw CustomError.internalServer(
         'Error en el Data Source al obtener todos',
       );
+    }
+  }
+
+  async delete(deleteCountryDto: DeleteCountryDto): Promise<Country> {
+    const { id } = deleteCountryDto;
+
+    try {
+      const result = await this.pool.query(
+        `select *
+        from core.core_country cou
+        where cou.cou_id = $1
+          and cou.cou_record_status = $2;`,
+        [id, '0'],
+      );
+
+      if (result.rows.length === 0) {
+        throw CustomError.notFound('No se ha encontrado el país a eliminar');
+      }
+
+      const deleted = await this.pool.query(
+        `delete
+        from core.core_country cou
+        where cou.cou_id = $1
+          and cou.cou_record_status = $2
+        returning *;`,
+        [id, '0'],
+      );
+
+      return CountryMapper.countryEntityFromObject(deleted.rows[0]);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer('Error en el Data Source al eliminar');
     }
   }
 }
