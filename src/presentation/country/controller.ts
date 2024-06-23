@@ -83,7 +83,9 @@ export class CountryController {
   };
 
   deleteCountry = (req: Request, res: Response) => {
-    const [error, deleteCountryDto] = DeleteCountryDto.create(req.params.id);
+    const [error, deleteCountryDto] = DeleteCountryDto.create(
+      parseInt(req.params.id, 10),
+    );
     if (error) return res.status(400).json({ error });
 
     new DeleteCountry(this.countryRepository)

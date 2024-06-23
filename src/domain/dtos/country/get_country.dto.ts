@@ -7,7 +7,7 @@ export class GetCountryDto {
 
   static create(id: number): [string?, GetCountryDto?] {
     if (!id) return ['El ID del país es requerido'];
-    if (!isNaN(id)) return ['El ID del país no es válido'];
+    if (isNaN(id)) return ['El ID del país no es válido'];
 
     return [undefined, new GetCountryDto(id)];
   }

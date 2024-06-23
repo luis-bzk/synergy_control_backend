@@ -19,6 +19,7 @@ export class UpdateCountryDto {
 
     // make validation
     if (!id) return ['El ID del país es requerido'];
+    if (isNaN(id)) return ['El ID del país es requerido'];
 
     if (!name) return ['El nombre del país es requerido'];
     if (name.length > 100)
