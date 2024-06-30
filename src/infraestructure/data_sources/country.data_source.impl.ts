@@ -26,7 +26,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
     try {
       const result = await this.pool.query<CountryDB>(
-        `select *
+        `select cou_id, cou_name, cou_record_status
         from core.core_country cou
         where lower(cou.cou_name) = $1
           and cou.cou_record_status = $2;`,
@@ -67,7 +67,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
     try {
       // verify existence
       const result = await this.pool.query(
-        `select *
+        `select cou_id, cou_name, cou_record_status
         from core.core_country cou
         where cou.cou_id = $1
           and cou.cou_record_status = $2;`,
@@ -79,7 +79,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
       // verify if there's a country with the same name
       const rowSameName = await this.pool.query(
-        `select *
+        `select cou_id, cou_name, cou_record_status
         from core.core_country cou
         where lower(cou.cou_name) = $1
           and cou.cou_id <> $2
@@ -88,7 +88,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
       );
       if (rowSameName.rows.length > 0) {
         throw CustomError.badRequest(
-          'Ya existe un pais co el nombre ingresado',
+          'Ya existe un pais con el nombre ingresado',
         );
       }
 
@@ -119,7 +119,7 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
     try {
       const result = await this.pool.query(
-        `select *
+        `select cou_id, cou_name, cou_record_status
         from core.core_country cou
         where cou.cou_id = $1
           and cou.cou_record_status = $2;`,
@@ -175,13 +175,12 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
     try {
       const result = await this.pool.query(
-        `select *
+        `select cou_id, cou_name, cou_record_status
         from core.core_country cou
         where cou.cou_id = $1
           and cou.cou_record_status = $2;`,
         [id, '0'],
       );
-
       if (result.rows.length === 0) {
         throw CustomError.notFound('No se ha encontrado el país a eliminar');
       }

@@ -31,7 +31,7 @@ export class CountryMapper {
       );
     if (!cou_created_date)
       throw CustomError.conflict(
-        'No se ha recibido la fecha ed creación el del país de la Base de Datos',
+        'No se ha recibido la fecha de creación del país de la Base de Datos',
       );
     if (!cou_record_status)
       throw CustomError.conflict(
