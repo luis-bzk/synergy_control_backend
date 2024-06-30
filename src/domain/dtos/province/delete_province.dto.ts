@@ -5,7 +5,7 @@ export class DeleteProvinceDto {
     this.id = id;
   }
 
-  static create(id: number) {
+  static create(id: number): [string?, DeleteProvinceDto?] {
     // make validation
     if (!id) return ['El ID de la provincia es requerido'];
     if (isNaN(id)) return ['El ID de la provincia no es válido'];

@@ -7,7 +7,7 @@ export class GetAllProvincesDto {
     this.offset = offset;
   }
 
-  static execute(object: {
+  static create(object: {
     [key: string]: any;
   }): [string?, GetAllProvincesDto?] {
     const { limit, offset } = object;

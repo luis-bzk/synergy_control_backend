@@ -41,7 +41,8 @@ export class CountryDataSourceImpl implements CountryDataSource {
 
       // create country
       const countryCreated = await this.pool.query<CountryDB>(
-        `insert into core.core_country(cou_name,
+        `insert into core.core_country
+                             (cou_name,
                               cou_code,
                               cou_prefix,
                               cou_created_date,

@@ -29,8 +29,7 @@ export class ProvinceDataSourceImpl implements ProvinceDataSource {
         `select pro_id, pro_name, id_country
         from core.core_province pro
         where lower(pro.pro_name) = $1
-          and pro.id_country = $2
-          and pro.pro_record_status = $3;`,
+          and pro.pro_record_status = $2;`,
         [name.toLowerCase(), id_country, '0'],
       );
 
