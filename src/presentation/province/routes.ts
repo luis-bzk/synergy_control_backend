@@ -1,7 +1,8 @@
 import { Router } from 'express';
+
+import { ProvinceController } from './controller';
 import { ProvinceDataSourceImpl } from '../../infraestructure/data_sources';
 import { ProvinceRepositoryImpl } from '../../infraestructure/repositories';
-import { ProvinceController } from './controller';
 
 export class ProvinceRoutes {
   static getRoutes(): Router {
