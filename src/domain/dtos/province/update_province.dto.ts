@@ -20,7 +20,7 @@ export class UpdateProvinceDto {
   }
 
   static create(
-    id: number,
+    id: string,
     object: { [key: string]: any },
   ): [string?, UpdateProvinceDto?] {
     const { name, code, prefix, id_country } = object;
@@ -28,7 +28,7 @@ export class UpdateProvinceDto {
     // make validation
 
     if (!id) return ['El ID de la provincia es requerido'];
-    if (isNaN(id)) return ['El ID de la provincia no es válido'];
+    if (isNaN(parseInt(id, 10))) return ['El ID de la provincia no es válido'];
 
     if (!name) return ['El nombre de la provincia es requerido'];
     if (name.length > 100)
@@ -47,7 +47,7 @@ export class UpdateProvinceDto {
 
     return [
       undefined,
-      new UpdateProvinceDto(id, name, code, prefix, id_country),
+      new UpdateProvinceDto(parseInt(id, 10), name, code, prefix, id_country),
     ];
   }
 }

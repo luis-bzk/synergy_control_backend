@@ -5,11 +5,11 @@ export class DeleteProvinceDto {
     this.id = id;
   }
 
-  static create(id: number): [string?, DeleteProvinceDto?] {
+  static create(id: string): [string?, DeleteProvinceDto?] {
     // make validation
     if (!id) return ['El ID de la provincia es requerido'];
-    if (isNaN(id)) return ['El ID de la provincia no es válido'];
+    if (isNaN(parseInt(id, 10))) return ['El ID de la provincia no es válido'];
 
-    return [undefined, new DeleteProvinceDto(id)];
+    return [undefined, new DeleteProvinceDto(parseInt(id, 10))];
   }
 }

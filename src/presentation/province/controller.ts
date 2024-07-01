@@ -47,7 +47,7 @@ export class ProvinceController {
 
   updateProvince = (req: Request, res: Response) => {
     const [error, updateProvinceDto] = UpdateProvinceDto.create(
-      parseInt(req.params.id, 10),
+      req.params.id,
       req.body,
     );
     if (error) return res.status(400).json({ error });
@@ -59,9 +59,7 @@ export class ProvinceController {
   };
 
   getProvince = (req: Request, res: Response) => {
-    const [error, getProvinceDto] = GetProvinceDto.create(
-      parseInt(req.params.id, 10),
-    );
+    const [error, getProvinceDto] = GetProvinceDto.create(req.params.id);
     if (error) return res.status(400).json({ error });
 
     new GetProvince(this.provinceRepository)
@@ -81,9 +79,7 @@ export class ProvinceController {
   };
 
   deleteProvince = (req: Request, res: Response) => {
-    const [error, deleteProvinceDto] = DeleteProvinceDto.create(
-      parseInt(req.params.id, 10),
-    );
+    const [error, deleteProvinceDto] = DeleteProvinceDto.create(req.params.id);
     if (error) return res.status(400).json({ error });
 
     new DeleteProvince(this.provinceRepository)

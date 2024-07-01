@@ -1,4 +1,4 @@
-export class GetAllProvincesDto {
+export class GetAllCitiesDto {
   public limit: number;
   public offset: number;
 
@@ -7,9 +7,7 @@ export class GetAllProvincesDto {
     this.offset = offset;
   }
 
-  static create(object: {
-    [key: string]: any;
-  }): [string?, GetAllProvincesDto?] {
+  static create(object: { [key: string]: any }) {
     const { limit, offset } = object;
 
     if (!Number.isInteger(Number(limit)))
@@ -20,7 +18,7 @@ export class GetAllProvincesDto {
 
     return [
       undefined,
-      new GetAllProvincesDto(parseInt(limit, 10), parseInt(offset, 10)),
+      new GetAllCitiesDto(parseInt(limit, 10), parseInt(offset, 10)),
     ];
   }
 }

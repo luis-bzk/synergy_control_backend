@@ -5,10 +5,10 @@ export class DeleteCountryDto {
     this.id = id;
   }
 
-  static create(id: number): [string?, DeleteCountryDto?] {
+  static create(id: string): [string?, DeleteCountryDto?] {
     if (!id) return ['El ID del país es requerido'];
-    if (isNaN(id)) return ['El ID del país no es válido'];
+    if (isNaN(parseInt(id, 10))) return ['El ID del país no es válido'];
 
-    return [undefined, new DeleteCountryDto(id)];
+    return [undefined, new DeleteCountryDto(parseInt(id, 10))];
   }
 }

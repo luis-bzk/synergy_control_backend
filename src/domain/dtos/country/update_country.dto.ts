@@ -12,14 +12,14 @@ export class UpdateCountryDto {
   }
 
   static create(
-    id: number,
+    id: string,
     object: { [key: string]: any },
   ): [string?, UpdateCountryDto?] {
     const { name, code, prefix } = object;
 
     // make validation
     if (!id) return ['El ID del país es requerido'];
-    if (isNaN(id)) return ['El ID del país es requerido'];
+    if (isNaN(parseInt(id, 10))) return ['El ID del país es requerido'];
 
     if (!name) return ['El nombre del país es requerido'];
     if (name.length > 100)
@@ -33,6 +33,9 @@ export class UpdateCountryDto {
     if (prefix.length > 10)
       return ['El prefijo del país no puede tener mas de 10 caracteres'];
 
-    return [undefined, new UpdateCountryDto(id, name, code, prefix)];
+    return [
+      undefined,
+      new UpdateCountryDto(parseInt(id, 10), name, code, prefix),
+    ];
   }
 }

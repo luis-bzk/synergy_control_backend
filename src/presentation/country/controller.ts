@@ -47,7 +47,7 @@ export class CountryController {
 
   updateCountry = (req: Request, res: Response) => {
     const [error, updateCountryDto] = UpdateCountryDto.create(
-      parseInt(req.params.id, 10),
+      req.params.id,
       req.body,
     );
 
@@ -60,9 +60,7 @@ export class CountryController {
   };
 
   getCountry = (req: Request, res: Response) => {
-    const [error, getCountryDto] = GetCountryDto.create(
-      parseInt(req.params.id, 10),
-    );
+    const [error, getCountryDto] = GetCountryDto.create(req.params.id);
 
     if (error) return res.status(400).json({ error });
 
@@ -83,9 +81,7 @@ export class CountryController {
   };
 
   deleteCountry = (req: Request, res: Response) => {
-    const [error, deleteCountryDto] = DeleteCountryDto.create(
-      parseInt(req.params.id, 10),
-    );
+    const [error, deleteCountryDto] = DeleteCountryDto.create(req.params.id);
     if (error) return res.status(400).json({ error });
 
     new DeleteCountry(this.countryRepository)
